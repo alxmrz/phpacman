@@ -17,7 +17,7 @@ class Player extends GameObject
     private const DIRECTION_DOWN = 2;
     private const DIRECTION_LEFT = 3;
     private const DIRECTION_RIGHT = 4;
-    private const DIRECTION_MOVE_STEP = 20;
+    private const DIRECTION_MOVE_STEP = 10;
     private int $direction = self::DIRECTION_NONE;
     private int $width;
     private SDLColor $color;
@@ -45,9 +45,14 @@ class Player extends GameObject
         $this->color = $color;
     }
 
+    public function isMovable(): bool
+    {
+        return true;
+    }
+
     public function onCollision(GameObject $gameObject): void
     {
-        if ($gameObject instanceof Wall) {
+        if ($this->direction !== self::DIRECTION_NONE && $gameObject instanceof Wall) {
             switch ($this->direction) {
                 case self::DIRECTION_UP:
                     $this->moveDown();

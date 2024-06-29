@@ -13,10 +13,10 @@ class Food extends core\GameObject
     public function __construct(SDLRect $rect, SDLColor $color)
     {
         $this->renderType = new Rectangle(
-            $rect->getX()+5,
-            $rect->getY()+5,
-            15,
-            15,
+            $rect->getX()+2,
+            $rect->getY()+2,
+            6,
+            6,
             $color
         );
         $this->collision = new Collision(

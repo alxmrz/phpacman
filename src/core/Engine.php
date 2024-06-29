@@ -65,6 +65,7 @@ class Engine
 
 
         while ($this->isRunning) {
+            $start = microtime(true);
             $this->handleEvents();
             $this->game->update($this->event);
 
@@ -72,7 +73,13 @@ class Engine
 
             $this->reset();
 
-            $this->delay(100);
+            $this->delay(16);
+            $end = microtime(true);
+
+            $time = $end - $start;
+
+            echo 'Framerate: ' . 1000 / ($time * 1000) . PHP_EOL;
+            echo 'Time for loop: ' . $time*1000 . PHP_EOL;
         }
 
         $this->quit();

@@ -54,4 +54,14 @@ class GameObject
     {
         return $this->needDestroy;
     }
+
+    public function getId(): string
+    {
+        return spl_object_hash($this);
+    }
+
+    public function isMovable(): bool
+    {
+        return false;
+    }
 }

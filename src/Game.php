@@ -27,37 +27,27 @@ class Game implements GameInterface
 
     public function init(): void
     {
-        $this->gameObjects[] = new Player(
-            new SDLRect(150, 150, 25, 25),
-            new SDLColor(255, 0, 0, 0)
-        );
+        $level = new Level();
 
-        $this->gameObjects[] = new Wall(
-            new SDLRect(250, 150, 550, 50),
-            new SDLColor(0, 0, 0, 0)
-        );
-
-        for ($i = 0; $i < 10; ++$i) {
-            $this->gameObjects[] = new Food(
-                new SDLRect(150 + ($i * 25) + 5, 350, 25, 25),
-                new SDLColor(0, 255, 0, 0)
-            );
-        }
+        $level->createFirst($this);
     }
 
     public function update(Event $event = null): void
     {
+        $checkPairs = [];
         foreach ($this->gameObjects as $key => $gameObject) {
+            $gameObject->update();
+
             if ($gameObject->needDestroy()) {
                 unset($this->gameObjects[$key]);
             }
 
-            if ($gameObject instanceof Wall) {
-                continue;
-            }
-
             if ($event instanceof KeyPressedEvent) {
                 $gameObject->onButtonPressed($event);
+            }
+
+            if (!$gameObject->isMovable()) {
+                continue;
             }
 
             foreach ($this->gameObjects as $gameObject1) {
@@ -65,19 +55,30 @@ class Game implements GameInterface
                     continue;
                 }
 
-                if ($gameObject->getCollision()->isCollidedWith($gameObject1->getCollision())
-                || $gameObject1->getCollision()->isCollidedWith($gameObject->getCollision())
+                if (isset($checkPairs["{$gameObject->getId()}:{$gameObject1->getId()}"])
+                    || isset($checkPairs["{$gameObject1->getId()}:{$gameObject->getId()}"])
                 ) {
-                    $gameObject->onCollision($gameObject1);
+                    continue;
                 }
-            }
 
-            $gameObject->update();
+                if ($gameObject->getCollision()->isCollidedWith($gameObject1->getCollision())) {
+                    $gameObject->onCollision($gameObject1);
+                    $gameObject1->onCollision($gameObject);
+                }
+
+                $checkPairs["{$gameObject->getId()}:{$gameObject1->getId()}"] = 1;
+                $checkPairs["{$gameObject1->getId()}:{$gameObject->getId()}"] = 1;
+            }
         }
     }
 
     public function draw(Renderer $renderer): void
     {
         $renderer->render($this->gameObjects);
+    }
+
+    public function addGameObject(GameObject $gameObject): void
+    {
+        $this->gameObjects[] = $gameObject;
     }
 }

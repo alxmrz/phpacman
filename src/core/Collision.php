@@ -19,10 +19,10 @@ class Collision
 
     public function isCollidedWith(Collision $collision): bool
     {
-        return $this->isCollidedByPoint($collision->x, $collision->y)
-            || $this->isCollidedByPoint($collision->x + $collision->width, $collision->y)
-            || $this->isCollidedByPoint($collision->x, $collision->y + $collision->height)
-            || $this->isCollidedByPoint($collision->x+$collision->width, $collision->y + $collision->height);
+        return $this->x < $collision->x + $collision->width &&
+            $this->x + $this->width > $collision->x &&
+            $this->y < $collision->y + $collision->height &&
+            $this->y + $this->height > $collision->y;
     }
 
     private function isCollidedByPoint(int $x, int $y): bool
