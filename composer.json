@@ -1,0 +1,22 @@
+{
+    "name": "alxmrz/phpacman",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alxmrz",
+            "email": "alexandr.moroz97@mail.ru"
+        }
+    ],
+    "require": {
+        "alxmrz/php-sdl2": "dev-main"
+    },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/alxmrz/php-sdl2"
+    }],
+    "autoload": {
+        "psr-4": {
+            "PHPacman\\": "src/"
+        }
+    }
+}

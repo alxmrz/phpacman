@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e245ff65589c83c1585bcd059c600997",
+    "packages": [
+        {
+            "name": "alxmrz/php-sdl2",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alxmrz/php-sdl2.git",
+                "reference": "cd9c951e39da27c54111a419cb9982214daf50f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alxmrz/php-sdl2/zipball/cd9c951e39da27c54111a419cb9982214daf50f2",
+                "reference": "cd9c951e39da27c54111a419cb9982214daf50f2",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SDL2\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alxmrz",
+                    "email": "alexandr.moroz97@mail.ru"
+                }
+            ],
+            "description": "PHP binding for SDL2 library",
+            "support": {
+                "source": "https://github.com/alxmrz/php-sdl2/tree/main",
+                "issues": "https://github.com/alxmrz/php-sdl2/issues"
+            },
+            "time": "2024-05-25T09:55:48+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "alxmrz/php-sdl2": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

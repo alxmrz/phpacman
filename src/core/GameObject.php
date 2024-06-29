@@ -1,0 +1,57 @@
+<?php
+
+namespace Deminer\core;
+
+class GameObject
+{
+    protected RenderType $renderType;
+    protected ?Collision $collision = null;
+    /**
+     * @var true
+     */
+    private bool $needDestroy = false;
+
+    public function onCollision(GameObject $gameObject): void
+    {
+
+    }
+
+    public function onClick(ClickEvent $event): void
+    {
+    }
+
+    public function onButtonPressed(KeyPressedEvent $event): void
+    {
+
+    }
+
+    public function update(): void
+    {
+
+    }
+
+    public function getRenderType(): RenderType
+    {
+        return $this->renderType;
+    }
+
+    public function getCollision(): ?Collision
+    {
+        return $this->collision;
+    }
+
+    public function isCollidable(): bool
+    {
+        return $this->collision !== null;
+    }
+
+    public function destroy(): void
+    {
+        $this->needDestroy = true;
+    }
+
+    public function needDestroy(): bool
+    {
+        return $this->needDestroy;
+    }
+}
