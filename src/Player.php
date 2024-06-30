@@ -11,18 +11,20 @@ use SDL2\SDLRect;
 
 class Player extends GameObject
 {
-
     private const DIRECTION_NONE = 0;
     private const DIRECTION_UP = 1;
     private const DIRECTION_DOWN = 2;
     private const DIRECTION_LEFT = 3;
     private const DIRECTION_RIGHT = 4;
-    private const DIRECTION_MOVE_STEP = 10;
+    private const DIRECTION_MOVE_STEP = 5;
     private int $direction = self::DIRECTION_NONE;
     private int $width;
     private SDLColor $color;
     private int $height;
     private int $score = 0;
+    private int $oldDirection = self::DIRECTION_NONE;
+    private ?Collision $expectedPosition = null;
+    private int $nextDirection = self::DIRECTION_NONE;
 
     public function __construct(SDLRect $rect, SDLColor $color)
     {
@@ -50,25 +52,28 @@ class Player extends GameObject
         return true;
     }
 
-    public function onCollision(GameObject $gameObject): void
+    public function onCollision(GameObject $gameObject, array $gameObjects): void
     {
-        if ($this->direction !== self::DIRECTION_NONE && $gameObject instanceof Wall) {
-            switch ($this->direction) {
-                case self::DIRECTION_UP:
-                    $this->moveDown();
-                    break;
-                case self::DIRECTION_DOWN:
-                    $this->moveUp();
-                    break;
-                case self::DIRECTION_LEFT:
-                    $this->moveRight();
-                    break;
-                case self::DIRECTION_RIGHT:
-                    $this->moveLeft();
-                    break;
+        if ($this->direction !== self::DIRECTION_NONE) {
+            if ($gameObject instanceof Wall) {
+                switch ($this->direction) {
+                    case self::DIRECTION_UP:
+                        $this->moveDown();
+                        break;
+                    case self::DIRECTION_DOWN:
+                        $this->moveUp();
+                        break;
+                    case self::DIRECTION_LEFT:
+                        $this->moveRight();
+                        break;
+                    case self::DIRECTION_RIGHT:
+                        $this->moveLeft();
+                        break;
+                }
+
+                $this->direction = self::DIRECTION_NONE;
             }
 
-            $this->direction = self::DIRECTION_NONE;
         }
 
         if ($gameObject instanceof Food) {
@@ -76,8 +81,10 @@ class Player extends GameObject
         }
     }
 
-    public function onButtonPressed(KeyPressedEvent $event): void
+    public function onButtonPressed(KeyPressedEvent $event, array $gameObjects): void
     {
+        $this->oldDirection = $this->direction;
+
         if ($event->isUpArrowKeyPressed()) {
             $this->setDirectionUp();
         } elseif ($event->isDownArrowKeyPressed()) {
@@ -87,6 +94,14 @@ class Player extends GameObject
         } elseif ($event->isRightArrowKeyPressed()) {
             $this->setDirectionRight();
         }
+
+        if ($this->oldDirection !== self::DIRECTION_NONE && !$this->canMoveAsBefore($gameObjects)) {
+            if ($this->expectedPosition) {
+                $this->nextDirection = $this->direction;
+            }
+            $this->direction = $this->oldDirection;
+        }
+
     }
 
     public function update(): void
@@ -105,6 +120,16 @@ class Player extends GameObject
                 $this->moveRight();
                 break;
         }
+
+        if ($this->expectedPosition
+            && ($this->renderType->x === $this->expectedPosition->x || $this->renderType->y === $this->expectedPosition->y)
+        ) {
+            $this->expectedPosition = null;
+            $this->direction = $this->nextDirection;
+            $this->nextDirection = self::DIRECTION_NONE;
+
+        }
+
     }
 
     private function setDirectionUp(): void
@@ -163,5 +188,50 @@ class Player extends GameObject
             $this->width,
             $this->height,
         );
+    }
+
+    private function canMoveAsBefore(array $gameObjects): bool
+    {
+        $newPosition = new Collision(
+            $this->collision->x,
+            $this->collision->y,
+            $this->collision->width,
+            $this->collision->height
+        );
+
+        switch ($this->direction) {
+            case self::DIRECTION_UP:
+                $newPosition->y -= $this->height + 1;
+                break;
+            case self::DIRECTION_DOWN:
+                $newPosition->y += $this->height+ 1;
+                break;
+            case self::DIRECTION_LEFT:
+                $newPosition->x -= $this->width+ 1;
+                break;
+            case self::DIRECTION_RIGHT:
+                $newPosition->x += $this->width+ 1;
+                break;
+        }
+
+        $result = true;
+
+        foreach ($gameObjects as $gameObject) {
+            if (!$newPosition->isCollidedWith($gameObject->getCollision())) {
+                continue;
+            }
+
+            if ($gameObject instanceof Wall) {
+                $result = false;
+            }
+
+            if ($gameObject instanceof Road
+                && ($this->renderType->x !== $gameObject->collision->x && $this->renderType->y !== $gameObject->collision->y)
+            ) {
+                $this->expectedPosition = $gameObject->getCollision();
+            }
+        }
+
+        return $result;
     }
 }

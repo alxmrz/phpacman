@@ -31,7 +31,7 @@ class Food extends core\GameObject
         $this->color = $color;
     }
 
-    public function onCollision(GameObject $gameObject): void
+    public function onCollision(GameObject $gameObject, array $gameObjects): void
     {
         if ($gameObject instanceof Player) {
             $this->destroy();

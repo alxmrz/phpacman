@@ -73,6 +73,10 @@ class Renderer
     public function renderGameObjects(array $gameObjects): void
     {
         foreach ($gameObjects as $gameObject) {
+            if (!$gameObject->isDisplayable()) {
+                continue;
+            }
+
             $gameObject->getRenderType()->display($this);
         }
     }

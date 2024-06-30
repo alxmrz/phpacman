@@ -11,7 +11,7 @@ class GameObject
      */
     private bool $needDestroy = false;
 
-    public function onCollision(GameObject $gameObject): void
+    public function onCollision(GameObject $gameObject, array $gameObjects): void
     {
 
     }
@@ -20,7 +20,7 @@ class GameObject
     {
     }
 
-    public function onButtonPressed(KeyPressedEvent $event): void
+    public function onButtonPressed(KeyPressedEvent $event, array $gameObjects): void
     {
 
     }
@@ -63,5 +63,10 @@ class GameObject
     public function isMovable(): bool
     {
         return false;
+    }
+
+    public function isDisplayable(): bool
+    {
+        return true;
     }
 }

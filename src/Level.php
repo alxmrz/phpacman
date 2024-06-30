@@ -45,6 +45,11 @@ class Level
                                 new SDLColor(0, 255, 0, 0)
                             )
                         );
+                        $game->addGameObject(
+                            new Road(
+                                new SDLRect($x + $i * $width, $y, $width, $width),
+                            )
+                        );
                         break;
                     case "P":
                         $game->addGameObject(

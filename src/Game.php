@@ -43,7 +43,7 @@ class Game implements GameInterface
             }
 
             if ($event instanceof KeyPressedEvent) {
-                $gameObject->onButtonPressed($event);
+                $gameObject->onButtonPressed($event, $this->gameObjects);
             }
 
             if (!$gameObject->isMovable()) {
@@ -62,8 +62,8 @@ class Game implements GameInterface
                 }
 
                 if ($gameObject->getCollision()->isCollidedWith($gameObject1->getCollision())) {
-                    $gameObject->onCollision($gameObject1);
-                    $gameObject1->onCollision($gameObject);
+                    $gameObject->onCollision($gameObject1, $this->gameObjects);
+                    $gameObject1->onCollision($gameObject, $this->gameObjects);
                 }
 
                 $checkPairs["{$gameObject->getId()}:{$gameObject1->getId()}"] = 1;
