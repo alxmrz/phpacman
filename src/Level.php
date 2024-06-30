@@ -56,7 +56,7 @@ class Level
                         break;
                 }
             }
-            $y += $width+10;
+            $y += $width;
         }
     }
 }

@@ -34,10 +34,10 @@ class Player extends GameObject
             $color
         );
         $this->collision = new Collision(
-            $rect->getX(),
-            $rect->getY(),
-            $rect->getWidth(),
-            $rect->getHeight()
+            $rect->getX()+ 10,
+            $rect->getY() + 10,
+            $rect->getWidth() - 10,
+            $rect->getHeight() - 10
         );
 
         $this->width = $rect->getWidth();

@@ -12,6 +12,7 @@ use SDL2\SDLEvent;
 
 class Engine
 {
+    private const int LOOP_DELAY = 10;
     private string $windowTitle = 'Game app';
     private int $windowStartX = 50;
     private int $windowStartY = 50;
@@ -73,13 +74,16 @@ class Engine
 
             $this->reset();
 
-            $this->delay(16);
             $end = microtime(true);
 
-            $time = $end - $start;
+            $timeElapsed = round(($end - $start) * 1000);
 
-            echo 'Framerate: ' . 1000 / ($time * 1000) . PHP_EOL;
-            echo 'Time for loop: ' . $time*1000 . PHP_EOL;
+            $this->delay(self::LOOP_DELAY);
+
+            $frameRateTime = $timeElapsed + self::LOOP_DELAY;
+
+            echo 'Framerate: ' . 1000 / $frameRateTime . PHP_EOL;
+            echo 'Updated in ms: ' . $timeElapsed . PHP_EOL;
         }
 
         $this->quit();

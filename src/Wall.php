@@ -13,17 +13,17 @@ class Wall extends GameObject
     public function __construct(SDLRect $rect, SDLColor $color)
     {
         $this->renderType = new Rectangle(
-            $rect->getX()+10,
-            $rect->getY()+10,
-            $rect->getWidth()-10,
-            $rect->getHeight()-10,
+            $rect->getX(),
+            $rect->getY(),
+            $rect->getWidth(),
+            $rect->getHeight(),
             $color
         );
         $this->collision = new Collision(
-            $rect->getX()+10,
-            $rect->getY()+10,
-            $rect->getWidth()-10,
-            $rect->getHeight()-10
+            $rect->getX(),
+            $rect->getY(),
+            $rect->getWidth(),
+            $rect->getHeight()
         );
 
         $this->width = $rect->getWidth();
