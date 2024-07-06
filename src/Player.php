@@ -1,16 +1,21 @@
 <?php
 
-namespace Deminer;
+namespace PHPacman;
 
-use Deminer\core\Collision;
-use Deminer\core\GameObject;
-use Deminer\core\KeyPressedEvent;
-use Deminer\core\Rectangle;
+use PHPacman\core\Audio;
+use PHPacman\core\Collision;
+use PHPacman\core\GameObject;
+use PHPacman\core\Image;
+use PHPacman\core\KeyPressedEvent;
+use PHPacman\core\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
 class Player extends GameObject
 {
+    private const string SPRITES = __DIR__ . '/../resources/pacman-sprites.png';
+    private const string EAT_SOUND = __DIR__ . '/../resources/wakawaka.mp3';
+
     private const DIRECTION_NONE = 0;
     private const DIRECTION_UP = 1;
     private const DIRECTION_DOWN = 2;
@@ -26,25 +31,56 @@ class Player extends GameObject
     private ?Collision $expectedPosition = null;
     private int $nextDirection = self::DIRECTION_NONE;
 
+    private array $frames = [
+        self::DIRECTION_UP => [
+            [103, 168, true],
+            [120, 151, true],
+            [120, 134, true],
+        ],
+        self::DIRECTION_DOWN => [
+            [103, 168, false],
+            [120, 151, false],
+            [120, 134, false],
+        ],
+        self::DIRECTION_LEFT => [
+            [103, 168, true],
+            [103, 151, true],
+            [103, 134, true],
+        ],
+        self::DIRECTION_RIGHT => [
+            [103, 168, false],
+            [103, 151, false],
+            [103, 134, false],
+        ],
+        self::DIRECTION_NONE => [
+            [103, 168, false],
+            [103, 151, false],
+            [103, 151, false],
+        ],
+    ];
+    private int $currentFrame = 0;
+    private Audio $audio;
+
+
+    public function getCurrentFrame(): array
+    {
+        return $this->frames[$this->direction][$this->currentFrame];
+    }
+
     public function __construct(SDLRect $rect, SDLColor $color)
     {
-        $this->renderType = new Rectangle(
-            $rect->getX(),
-            $rect->getY(),
-            $rect->getWidth(),
-            $rect->getHeight(),
-            $color
-        );
+        $this->width = $rect->getWidth();
+        $this->height = $rect->getHeight();
+        $this->color = $color;
+        $this->audio = new Audio();
+        $this->renderType = $this->createRenderTypeImage($rect->getX(), $rect->getY());
+
         $this->collision = new Collision(
             $rect->getX()+ 10,
             $rect->getY() + 10,
             $rect->getWidth() - 10,
             $rect->getHeight() - 10
         );
-
-        $this->width = $rect->getWidth();
-        $this->height = $rect->getHeight();
-        $this->color = $color;
     }
 
     public function isMovable(): bool
@@ -77,6 +113,10 @@ class Player extends GameObject
         }
 
         if ($gameObject instanceof Food) {
+            if (!$this->audio->isChannelPlaying()) {
+                $this->audio->playChunk(self::EAT_SOUND);
+            }
+
             $this->score += 1;
         }
     }
@@ -106,6 +146,11 @@ class Player extends GameObject
 
     public function update(): void
     {
+        $this->currentFrame++;
+        if ($this->currentFrame > 2) {
+            $this->currentFrame = 0;
+        }
+
         switch ($this->direction) {
             case self::DIRECTION_UP:
                 $this->moveUp();
@@ -174,13 +219,7 @@ class Player extends GameObject
 
     private function recreatePosition(int $x, int $y): void
     {
-        $this->renderType = new Rectangle(
-            $x,
-            $y,
-            $this->width,
-            $this->height,
-            $this->color
-        );
+        $this->renderType = $this->createRenderTypeImage($x, $y);
 
         $this->collision = new Collision(
             $x,
@@ -190,6 +229,32 @@ class Player extends GameObject
         );
     }
 
+    private function createRenderTypeImage(int $x, int $y): Image
+    {
+        $image = new Image(
+            self::SPRITES,
+            new SDLRect(
+                $x,
+                $y,
+                $this->width,
+                $this->height,
+            ),
+            new SDLRect(
+                $this->getCurrentFrame()[0],
+                $this->getCurrentFrame()[1],
+                16,
+                16
+            ),
+            $this->getCurrentFrame()[2] ? 180:0
+        );
+
+        return $image;
+    }
+
+    /**
+     * @param GameObject[] $gameObjects
+     * @return bool
+     */
     private function canMoveAsBefore(array $gameObjects): bool
     {
         $newPosition = new Collision(
@@ -217,7 +282,7 @@ class Player extends GameObject
         $result = true;
 
         foreach ($gameObjects as $gameObject) {
-            if (!$newPosition->isCollidedWith($gameObject->getCollision())) {
+            if (!$gameObject->isCollidable() || !$newPosition->isCollidedWith($gameObject->getCollision())) {
                 continue;
             }
 

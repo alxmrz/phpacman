@@ -1,13 +1,15 @@
 <?php
 
-namespace Deminer\core;
+namespace PHPacman\core;
 
 use SDL2\LibSDL2;
 use SDL2\LibSDL2Image;
 use SDL2\LibSDL2TTF;
 use SDL2\SDLColor;
+use SDL2\SDLPoint;
 use SDL2\SDLRect;
 use SDL2\SDLRenderer;
+use SDL2\SDLRendererFlip;
 
 class Renderer
 {
@@ -152,7 +154,14 @@ class Renderer
         $this->sdl->SDL_FreeSurface($surfaceMessage);
     }
 
-    public function displayImage(SDLRect $rect, string $image): void
+    public function displayImage(
+        SDLRect $rect,
+        string $image,
+        SDLRect $source = null,
+        float $angle = 0.0,
+        SDLPoint $center = null,
+        SDLRendererFlip $flip = SDLRendererFlip::SDL_FLIP_NONE,
+    ): void
     {
         $image = $this->imager->IMG_Load($image);
         if ($image === null) {
@@ -172,7 +181,7 @@ class Renderer
             exit();
         }
 
-        if ($this->sdl->SDL_RenderCopy($this->renderer, $textureMessage, null, $rect) !== 0) {
+        if ($this->sdl->SDL_RenderCopyEx($this->renderer, $textureMessage, $source, $rect, $angle, $center, $flip) !== 0) {
             printf("Error on copy: %s\n", $this->sdl->SDL_GetError());
 
             $this->sdl->SDL_FreeSurface($image);

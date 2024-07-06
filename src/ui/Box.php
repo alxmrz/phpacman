@@ -1,9 +1,9 @@
 <?php
 
-namespace Deminer\ui;
+namespace PHPacman\ui;
 
-use Deminer\core\Renderer;
-use Deminer\core\RenderType;
+use PHPacman\core\Renderer;
+use PHPacman\core\RenderType;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 

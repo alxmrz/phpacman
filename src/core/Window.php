@@ -1,6 +1,6 @@
 <?php
 
-namespace Deminer\core;
+namespace PHPacman\core;
 
 use SDL2\LibSDL2;
 use SDL2\LibSDL2Image;

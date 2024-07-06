@@ -1,14 +1,18 @@
 <?php
 
-namespace Deminer\core;
+namespace PHPacman\core;
 
-use Deminer\Game;
+use PHPacman\Game;
+use PHPacman\ui\Message;
+use PHPacman\ui\MessageBox;
 use SDL2\KeyCodes;
 use SDL2\LibSDL2;
 use SDL2\LibSDL2Image;
 use SDL2\LibSDL2Mixer;
 use SDL2\LibSDL2TTF;
+use SDL2\SDLColor;
 use SDL2\SDLEvent;
+use SDL2\SDLRect;
 
 class Engine
 {
@@ -30,6 +34,9 @@ class Engine
     private LibSDL2TTF $ttf;
     private LibSDL2Image $imager;
     private LibSDL2Mixer $mixer;
+    private Message $fpmMessage;
+    private Message $loopTimeMessage;
+    private Message $objectsCountMessage;
 
     private function init(): void
     {
@@ -64,26 +71,45 @@ class Engine
 
         $this->game->init();
 
+        $this->game->addGameObject(new MessageBox(
+            new SDLRect(550, 100, 335, 100),
+            new SDLColor(0, 0, 0, 0)
+        ));
+        $this->game->addGameObject($this->fpmMessage = new Message(
+            'FPS: ',
+            new SDLRect(550, 100, 300, 100),
+            new SDLColor(255, 0, 0, 0)
+        ));
+        $this->game->addGameObject($this->loopTimeMessage = new Message(
+            'Loop time: ',
+            new SDLRect(550, 250, 300, 50),
+            new SDLColor(255, 0, 0, 0)
+        ));
+
+        $this->game->addGameObject($this->objectsCountMessage = new Message(
+            'Objects in game: ',
+            new SDLRect(550, 350, 300, 50),
+            new SDLColor(255, 0, 0, 0)
+        ));
 
         while ($this->isRunning) {
             $start = microtime(true);
+
             $this->handleEvents();
             $this->game->update($this->event);
-
             $this->game->draw($this->renderer);
-
             $this->reset();
 
             $end = microtime(true);
-
             $timeElapsed = round(($end - $start) * 1000);
 
             $this->delay(self::LOOP_DELAY);
 
             $frameRateTime = $timeElapsed + self::LOOP_DELAY;
 
-            echo 'Framerate: ' . 1000 / $frameRateTime . PHP_EOL;
-            echo 'Updated in ms: ' . $timeElapsed . PHP_EOL;
+            $this->fpmMessage->changeText('Framerate: ' . round(1000 / $frameRateTime, 0, PHP_ROUND_HALF_DOWN));
+            $this->loopTimeMessage->changeText('Upd/draw time (ms): ' . $timeElapsed);
+            $this->objectsCountMessage->changeText('Objects in game: ' . $this->game->countGameObjects());
         }
 
         $this->quit();

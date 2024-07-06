@@ -1,6 +1,6 @@
 <?php
 
-namespace Deminer\core;
+namespace PHPacman\core;
 
 class GameObject
 {

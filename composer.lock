@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e245ff65589c83c1585bcd059c600997",
+    "content-hash": "9cf993287f594a5a196af6a6965e09f6",
     "packages": [
         {
             "name": "alxmrz/php-sdl2",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/alxmrz/php-sdl2.git",
-                "reference": "cd9c951e39da27c54111a419cb9982214daf50f2"
+                "reference": "8251ce4a80d23c52ead0288edc51bd8b07b00b9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alxmrz/php-sdl2/zipball/cd9c951e39da27c54111a419cb9982214daf50f2",
-                "reference": "cd9c951e39da27c54111a419cb9982214daf50f2",
+                "url": "https://api.github.com/repos/alxmrz/php-sdl2/zipball/8251ce4a80d23c52ead0288edc51bd8b07b00b9a",
+                "reference": "8251ce4a80d23c52ead0288edc51bd8b07b00b9a",
                 "shasum": ""
             },
             "require-dev": {
@@ -44,7 +44,7 @@
                 "source": "https://github.com/alxmrz/php-sdl2/tree/main",
                 "issues": "https://github.com/alxmrz/php-sdl2/issues"
             },
-            "time": "2024-05-25T09:55:48+00:00"
+            "time": "2024-07-06T16:05:05+00:00"
         }
     ],
     "packages-dev": [],

@@ -1,6 +1,6 @@
 <?php
 
-namespace Deminer\ui;
+namespace PHPacman\ui;
 
 use SDL2\SDLColor;
 use SDL2\SDLRect;

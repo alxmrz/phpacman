@@ -1,8 +1,8 @@
 <?php
 
-namespace Deminer;
+namespace PHPacman;
 
-use Deminer\core\Collision;
+use PHPacman\core\Collision;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 

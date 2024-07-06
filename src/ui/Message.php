@@ -1,8 +1,8 @@
 <?php
 
-namespace Deminer\ui;
+namespace PHPacman\ui;
 
-use Deminer\core\Text;
+use PHPacman\core\Text;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
@@ -19,5 +19,10 @@ class Message extends Element
             $message,
             50
         );
+    }
+
+    public function changeText(string $text): void
+    {
+        $this->renderType->setText($text);
     }
 }

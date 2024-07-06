@@ -1,10 +1,10 @@
 <?php
 
-namespace Deminer;
+namespace PHPacman;
 
-use Deminer\core\Collision;
-use Deminer\core\GameObject;
-use Deminer\core\Rectangle;
+use PHPacman\core\Collision;
+use PHPacman\core\GameObject;
+use PHPacman\core\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 

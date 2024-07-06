@@ -1,28 +1,34 @@
 <?php
 
-namespace Deminer;
+namespace PHPacman;
 
-use Deminer\core\GameObject;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
 class Level
 {
     private string $level1 = "
-*********************|
-***SSSSSSSSSSSSSSS***|
-***S**S***S**S**S****|
-***S**S***S**S**S****|
-***S**S***S**S**S****|
-***S**S***S**S**S****|
-***SSSSSSSPSSSSSS****|
-*********************|
+*****************|
+*SSSSSSS*SSSSSSS*|
+*S*S***S*S***S*S*|
+*SSSSSSSSSSSSSSS*|
+*S*S**S***S**S*S*|
+*SSS*SSSSSSS*SSS*|
+***S*S**S**S*S***|
+SSSSSS*SSS*SSSSSS|
+***S*S*****S*S***|
+*SSS*SSSSSSS*SSS*|
+*S*S**S***S**S*S*|
+*SSSSSSSPSSSSSSS*|
+*S*S***S*S***S*S*|
+*SSSSSSS*SSSSSSS*|
+*****************|
 ";
     public function createFirst(Game $game): void
     {
         $rows = explode("|", $this->level1);
         $y = 0;
-        $width = 40;
+        $width = 30;
 
 
         foreach ($rows as $key => $row) {

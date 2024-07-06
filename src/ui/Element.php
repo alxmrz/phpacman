@@ -1,8 +1,8 @@
 <?php
 
-namespace Deminer\ui;
+namespace PHPacman\ui;
 
-use Deminer\core\GameObject;
+use PHPacman\core\GameObject;
 
 class Element extends GameObject
 {

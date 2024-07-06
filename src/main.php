@@ -1,7 +1,7 @@
 <?php
 
-use Deminer\core\Engine;
-use Deminer\Game;
+use PHPacman\core\Engine;
+use PHPacman\Game;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

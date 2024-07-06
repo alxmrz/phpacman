@@ -1,6 +1,6 @@
 <?php
 
-namespace Deminer\core;
+namespace PHPacman\core;
 
 use SDL2\SDLColor;
 
@@ -26,5 +26,10 @@ class Text extends RenderType
     public function setColor(SDLColor $color): void
     {
         $this->color = $color;
+    }
+
+    public function setText(string $text): void
+    {
+        $this->text = $text;
     }
 }

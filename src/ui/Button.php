@@ -1,11 +1,11 @@
 <?php
 
-namespace Deminer\ui;
+namespace PHPacman\ui;
 
 use Closure;
-use Deminer\core\ClickEvent;
-use Deminer\core\Collision;
-use Deminer\core\Text;
+use PHPacman\core\ClickEvent;
+use PHPacman\core\Collision;
+use PHPacman\core\Text;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
