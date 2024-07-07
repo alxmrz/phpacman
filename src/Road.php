@@ -3,7 +3,6 @@
 namespace PHPacman;
 
 use PHPacman\core\Collision;
-use SDL2\SDLColor;
 use SDL2\SDLRect;
 
 class Road extends core\GameObject

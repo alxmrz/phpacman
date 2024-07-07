@@ -4,6 +4,7 @@ namespace PHPacman;
 
 use PHPacman\core\Collision;
 use PHPacman\core\GameObject;
+use PHPacman\core\GameObjects;
 use PHPacman\core\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
@@ -31,7 +32,7 @@ class Food extends core\GameObject
         $this->color = $color;
     }
 
-    public function onCollision(GameObject $gameObject, array $gameObjects): void
+    public function onCollision(GameObject $gameObject, GameObjects $gameObjects): void
     {
         if ($gameObject instanceof Player) {
             $this->destroy();

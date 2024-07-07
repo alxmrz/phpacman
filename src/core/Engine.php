@@ -37,6 +37,7 @@ class Engine
     private Message $fpmMessage;
     private Message $loopTimeMessage;
     private Message $objectsCountMessage;
+    private GameObjects $gameObjects;
 
     private function init(): void
     {
@@ -56,37 +57,33 @@ class Engine
         $this->window->display();
 
         $this->renderer = $this->window->createRenderer($this->sdl, $this->ttf, $this->imager);
+        $this->gameObjects = new GameObjects();
     }
 
     public function run(GameInterface $game): void
     {
         $this->game = $game;
 
-        // TODO: in future it will be replaced with component injection
-        if ($this->game instanceof Game) {
-            //$this->game->setAudio($this->createAudio());
-        }
-
         $this->init();
 
-        $this->game->init();
+        $this->game->init($this->gameObjects);
 
-        $this->game->addGameObject(new MessageBox(
+        $this->gameObjects->attach(new MessageBox(
             new SDLRect(550, 100, 335, 100),
             new SDLColor(0, 0, 0, 0)
         ));
-        $this->game->addGameObject($this->fpmMessage = new Message(
+        $this->gameObjects->attach($this->fpmMessage = new Message(
             'FPS: ',
             new SDLRect(550, 100, 300, 100),
             new SDLColor(255, 0, 0, 0)
         ));
-        $this->game->addGameObject($this->loopTimeMessage = new Message(
+        $this->gameObjects->attach($this->loopTimeMessage = new Message(
             'Loop time: ',
             new SDLRect(550, 250, 300, 50),
             new SDLColor(255, 0, 0, 0)
         ));
 
-        $this->game->addGameObject($this->objectsCountMessage = new Message(
+        $this->gameObjects->attach($this->objectsCountMessage = new Message(
             'Objects in game: ',
             new SDLRect(550, 350, 300, 50),
             new SDLColor(255, 0, 0, 0)
@@ -97,7 +94,8 @@ class Engine
 
             $this->handleEvents();
             $this->game->update($this->event);
-            $this->game->draw($this->renderer);
+            $this->gameObjects->update($this->event);
+            $this->renderer->render($this->gameObjects);
             $this->reset();
 
             $end = microtime(true);
@@ -105,11 +103,9 @@ class Engine
 
             $this->delay(self::LOOP_DELAY);
 
-            $frameRateTime = $timeElapsed + self::LOOP_DELAY;
-
-            $this->fpmMessage->changeText('Framerate: ' . round(1000 / $frameRateTime, 0, PHP_ROUND_HALF_DOWN));
+            $this->fpmMessage->changeText('Framerate: ' . round(1000 / ($timeElapsed + self::LOOP_DELAY), 0, PHP_ROUND_HALF_DOWN));
             $this->loopTimeMessage->changeText('Upd/draw time (ms): ' . $timeElapsed);
-            $this->objectsCountMessage->changeText('Objects in game: ' . $this->game->countGameObjects());
+            $this->objectsCountMessage->changeText('Objects in game: ' . $this->gameObjects->count());
         }
 
         $this->quit();

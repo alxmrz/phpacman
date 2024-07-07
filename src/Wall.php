@@ -25,9 +25,5 @@ class Wall extends GameObject
             $rect->getWidth(),
             $rect->getHeight()
         );
-
-        $this->width = $rect->getWidth();
-        $this->height = $rect->getHeight();
-        $this->color = $color;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace PHPacman;
 
+use PHPacman\core\GameObjects;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
@@ -24,7 +25,7 @@ SSSSSS*SSS*SSSSSS|
 *SSSSSSS*SSSSSSS*|
 *****************|
 ";
-    public function createFirst(Game $game): void
+    public function createFirst(GameObjects $gameObjects): void
     {
         $rows = explode("|", $this->level1);
         $y = 0;
@@ -37,7 +38,7 @@ SSSSSS*SSS*SSSSSS|
             for ($i = 0; $i < strlen($row); $i++) {
                 switch ($row[$i]) {
                     case "*":
-                       $game->addGameObject(
+                       $gameObjects->attach(
                            new Wall(
                                new SDLRect($x + $i * $width, $y, $width, $width),
                                new SDLColor(0, 0, 0, 0)
@@ -45,20 +46,20 @@ SSSSSS*SSS*SSSSSS|
                        );
                        break;
                     case "S":
-                        $game->addGameObject(
+                        $gameObjects->attach(
                             new Food(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                                 new SDLColor(0, 255, 0, 0)
                             )
                         );
-                        $game->addGameObject(
+                        $gameObjects->attach(
                             new Road(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                             )
                         );
                         break;
                     case "P":
-                        $game->addGameObject(
+                        $gameObjects->attach(
                             new Player(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                                 new SDLColor(255, 0, 0, 0)

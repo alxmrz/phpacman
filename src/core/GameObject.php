@@ -11,7 +11,7 @@ class GameObject
      */
     private bool $needDestroy = false;
 
-    public function onCollision(GameObject $gameObject, array $gameObjects): void
+    public function onCollision(GameObject $gameObject, GameObjects $gameObjects): void
     {
 
     }
@@ -20,7 +20,7 @@ class GameObject
     {
     }
 
-    public function onButtonPressed(KeyPressedEvent $event, array $gameObjects): void
+    public function onButtonPressed(KeyPressedEvent $event, GameObjects $gameObjects): void
     {
 
     }

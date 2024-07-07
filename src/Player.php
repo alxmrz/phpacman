@@ -5,9 +5,9 @@ namespace PHPacman;
 use PHPacman\core\Audio;
 use PHPacman\core\Collision;
 use PHPacman\core\GameObject;
+use PHPacman\core\GameObjects;
 use PHPacman\core\Image;
 use PHPacman\core\KeyPressedEvent;
-use PHPacman\core\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
@@ -16,12 +16,12 @@ class Player extends GameObject
     private const string SPRITES = __DIR__ . '/../resources/pacman-sprites.png';
     private const string EAT_SOUND = __DIR__ . '/../resources/wakawaka.mp3';
 
-    private const DIRECTION_NONE = 0;
-    private const DIRECTION_UP = 1;
-    private const DIRECTION_DOWN = 2;
-    private const DIRECTION_LEFT = 3;
-    private const DIRECTION_RIGHT = 4;
-    private const DIRECTION_MOVE_STEP = 5;
+    private const int DIRECTION_NONE = 0;
+    private const int DIRECTION_UP = 1;
+    private const int DIRECTION_DOWN = 2;
+    private const int DIRECTION_LEFT = 3;
+    private const int DIRECTION_RIGHT = 4;
+    private const int DIRECTION_MOVE_STEP = 5;
     private int $direction = self::DIRECTION_NONE;
     private int $width;
     private SDLColor $color;
@@ -88,7 +88,7 @@ class Player extends GameObject
         return true;
     }
 
-    public function onCollision(GameObject $gameObject, array $gameObjects): void
+    public function onCollision(GameObject $gameObject, GameObjects $gameObjects): void
     {
         if ($this->direction !== self::DIRECTION_NONE) {
             if ($gameObject instanceof Wall) {
@@ -121,7 +121,7 @@ class Player extends GameObject
         }
     }
 
-    public function onButtonPressed(KeyPressedEvent $event, array $gameObjects): void
+    public function onButtonPressed(KeyPressedEvent $event, GameObjects $gameObjects): void
     {
         $this->oldDirection = $this->direction;
 
@@ -252,10 +252,10 @@ class Player extends GameObject
     }
 
     /**
-     * @param GameObject[] $gameObjects
+     * @param GameObjects $gameObjects
      * @return bool
      */
-    private function canMoveAsBefore(array $gameObjects): bool
+    private function canMoveAsBefore(GameObjects $gameObjects): bool
     {
         $newPosition = new Collision(
             $this->collision->x,

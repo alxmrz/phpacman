@@ -52,7 +52,7 @@ class Renderer
         return 1;
     }
 
-    public function render(array $gameObjects): void
+    public function render(GameObjects $gameObjects): void
     {
         if ($this->sdl->SDL_RenderClear($this->renderer) < 0) {
             printf("Cant clear renderer: %s\n", $this->sdl->SDL_GetError());
@@ -69,10 +69,10 @@ class Renderer
     }
 
     /**
-     * @param GameObject[] $gameObjects
+     * @param GameObjects $gameObjects
      * @return void
      */
-    public function renderGameObjects(array $gameObjects): void
+    public function renderGameObjects(GameObjects $gameObjects): void
     {
         foreach ($gameObjects as $gameObject) {
             if (!$gameObject->isDisplayable()) {
