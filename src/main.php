@@ -1,7 +1,7 @@
 <?php
 
-use PHPacman\core\Engine;
 use PHPacman\Game;
+use PsyXEngine\Engine;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

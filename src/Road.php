@@ -2,10 +2,11 @@
 
 namespace PHPacman;
 
-use PHPacman\core\Collision;
+use PsyXEngine\Collision;
+use PsyXEngine\GameObject;
 use SDL2\SDLRect;
 
-class Road extends core\GameObject
+class Road extends GameObject
 {
     public function __construct(SDLRect $rect)
     {

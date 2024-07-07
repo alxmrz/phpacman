@@ -2,14 +2,14 @@
 
 namespace PHPacman;
 
-use PHPacman\core\Collision;
-use PHPacman\core\GameObject;
-use PHPacman\core\GameObjects;
-use PHPacman\core\Rectangle;
+use PsyXEngine\Collision;
+use PsyXEngine\GameObject;
+use PsyXEngine\GameObjects;
+use PsyXEngine\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
-class Food extends core\GameObject
+class Food extends GameObject
 {
     public function __construct(SDLRect $rect, SDLColor $color)
     {
@@ -26,10 +26,6 @@ class Food extends core\GameObject
             $rect->getWidth(),
             $rect->getHeight()
         );
-
-        $this->width = $rect->getWidth();
-        $this->height = $rect->getHeight();
-        $this->color = $color;
     }
 
     public function onCollision(GameObject $gameObject, GameObjects $gameObjects): void

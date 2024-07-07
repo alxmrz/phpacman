@@ -2,9 +2,9 @@
 
 namespace PHPacman;
 
-use PHPacman\core\Collision;
-use PHPacman\core\GameObject;
-use PHPacman\core\Rectangle;
+use PsyXEngine\Collision;
+use PsyXEngine\GameObject;
+use PsyXEngine\Rectangle;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 

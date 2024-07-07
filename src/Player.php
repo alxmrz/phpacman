@@ -2,12 +2,12 @@
 
 namespace PHPacman;
 
-use PHPacman\core\Audio;
-use PHPacman\core\Collision;
-use PHPacman\core\GameObject;
-use PHPacman\core\GameObjects;
-use PHPacman\core\Image;
-use PHPacman\core\KeyPressedEvent;
+use PsyXEngine\Audio;
+use PsyXEngine\Collision;
+use PsyXEngine\GameObject;
+use PsyXEngine\GameObjects;
+use PsyXEngine\Image;
+use PsyXEngine\KeyPressedEvent;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 

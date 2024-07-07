@@ -2,9 +2,9 @@
 
 namespace PHPacman;
 
-use PHPacman\core\Event;
-use PHPacman\core\GameInterface;
-use PHPacman\core\GameObjects;
+use PsyXEngine\Event;
+use PsyXEngine\GameInterface;
+use PsyXEngine\GameObjects;
 
 class Game implements GameInterface
 {

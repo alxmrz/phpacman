@@ -2,7 +2,7 @@
 
 namespace PHPacman;
 
-use PHPacman\core\GameObjects;
+use PsyXEngine\GameObjects;
 use SDL2\SDLColor;
 use SDL2\SDLRect;
 
