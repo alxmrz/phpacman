@@ -52,12 +52,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/alxmrz/psyx-engine.git",
-                "reference": "ae9af1ce7793bcad407a279dcdd9ed74dde64081"
+                "reference": "5dbec37a71977ae5d80b26538c71d5df3c33a550"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alxmrz/psyx-engine/zipball/ae9af1ce7793bcad407a279dcdd9ed74dde64081",
-                "reference": "ae9af1ce7793bcad407a279dcdd9ed74dde64081",
+                "url": "https://api.github.com/repos/alxmrz/psyx-engine/zipball/5dbec37a71977ae5d80b26538c71d5df3c33a550",
+                "reference": "5dbec37a71977ae5d80b26538c71d5df3c33a550",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "source": "https://github.com/alxmrz/psyx-engine/tree/main",
                 "issues": "https://github.com/alxmrz/psyx-engine/issues"
             },
-            "time": "2024-07-07T06:55:08+00:00"
+            "time": "2024-07-07T08:27:43+00:00"
         }
     ],
     "packages-dev": [],

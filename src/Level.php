@@ -38,7 +38,7 @@ SSSSSS*SSS*SSSSSS|
             for ($i = 0; $i < strlen($row); $i++) {
                 switch ($row[$i]) {
                     case "*":
-                       $gameObjects->attach(
+                       $gameObjects->add(
                            new Wall(
                                new SDLRect($x + $i * $width, $y, $width, $width),
                                new SDLColor(0, 0, 0, 0)
@@ -46,20 +46,20 @@ SSSSSS*SSS*SSSSSS|
                        );
                        break;
                     case "S":
-                        $gameObjects->attach(
+                        $gameObjects->add(
                             new Food(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                                 new SDLColor(0, 255, 0, 0)
                             )
                         );
-                        $gameObjects->attach(
+                        $gameObjects->add(
                             new Road(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                             )
                         );
                         break;
                     case "P":
-                        $gameObjects->attach(
+                        $gameObjects->add(
                             new Player(
                                 new SDLRect($x + $i * $width, $y, $width, $width),
                                 new SDLColor(255, 0, 0, 0)

@@ -10,5 +10,6 @@ $engine = new Engine();
 $engine->setWindowTitle('PHPacman');
 $engine->setWindowWidth(900);
 $engine->setWindowHeight(600);
+$engine->displayDebugInfo();
 
 $engine->run(new Game());
